@@ -7,9 +7,9 @@ int main()
 	printf("Even numbers are: ");
 	int evenNumber = 2;
 	for(int evenNumberCounter = 1; evenNumberCounter <= countOfEvenNumbers; evenNumberCounter++, printf("%d\t", evenNumber), evenNumber = evenNumber + 2);
-	//{
-		//printf("%d\t", evenNumber);
-		//evenNumber = evenNumber + 2;
-	//}
+	{
+		printf("%d\t", evenNumber);
+		evenNumber = evenNumber + 2;
+	}
 	return 0;
 }
