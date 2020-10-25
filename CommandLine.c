@@ -1,4 +1,4 @@
-//Print command line arguments
+//Program of command line arguments
 #include <stdio.h>
 
 int main(int argc, char *argv[])
