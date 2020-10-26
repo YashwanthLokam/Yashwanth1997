@@ -2,33 +2,60 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#define SEARCH "{:,["
+#define SEARCH_DELEMITERS "{:,["
+#define WEATHER_REPORT_FILE "weather_report.dat"
+void display_temperature(char* token);
 void is_pointer_null(FILE*);
+void load_weather_report();
+char* get_temperature(char);
 
 int main()
 {
-	printf("Enter a city name: ");
-	char city[20];
-	char command[200];
-	char *token;
+	display_temperature();
+}
+
+char* get_temperature(char *file_name)
+{
+	char *ptr_token_of_string;
+	char *temperature_in_weather_report_file;
 	char weather_report[1000];
-	scanf("%s", city);
-	sprintf(command, "curl \"http://api.openweathermap.org/data/2.5/find?q=%s&appid=7a9f30882737a25fea0fcf2974889d24&units=metric\" > weather_report.dat", city);
-	system(command);
 	FILE *fp_weather_report;
-	fp_weather_report = fopen("weather_report.dat", "r");
+	fp_weather_report = fopen(file_name, "r");
 	is_pointer_null(fp_weather_report);
 	fread(weather_report, sizeof(weather_report), 1, fp_weather_report);
-	token = strtok(weather_report, SEARCH);
-	while(token != NULL)
+	ptr_token_of_string = strtok(weather_report, SEARCH);
+	while(ptr_token_of_string != NULL)
 	{
-		if(strcmp(token, "\"temp\"") == 0)
+		int temperature_found = 0;
+		if(strcmp(ptr_token_of_string, "\"temp\"") == 0)
 		{
-			break;
+			temperature_found = 1;
 		}
-		token = strtok(NULL, SEARCH);
+		ptr_token_of_string = strtok(NULL, SEARCH);
+		if(temperature_found == 1)
+		{
+			temperature_in_weather_report_file = ptr_token_of_string;
+		}
 	}
-	printf("The temperature of %s is %s.", city, strtok(NULL, SEARCH));
+	fclose(fp_weather_report);
+	return temperature_in_weather_report_file;
+}
+
+void display_temperature()
+{
+	printf("Enter a city name: ");
+	char city[20];
+	scanf("%s", city);
+	load_weather_report(city, WEATHER_REPORT_FILE);
+	char *temperture = get_temperature(WEATHER_REPORT_FILE);
+	printf("The temperature in %s is %s.",city, temperature);
+}
+
+void load_weather_report(char *city_name, char *file_name)
+{
+	char command[200];
+	sprintf(command, "curl \"http://api.openweathermap.org/data/2.5/find?q=%s&appid=7a9f30882737a25fea0fcf2974889d24&units=metric\" > %s -s", city_name, file_name);
+	system(command);
 }
 
 void is_pointer_null(FILE *temp_file)
