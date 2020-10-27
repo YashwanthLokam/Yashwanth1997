@@ -48,7 +48,7 @@ void display_temperature()
 	scanf("%s", city);
 	load_weather_report(city, WEATHER_REPORT_FILE);
 	char *temperature = get_temperature(WEATHER_REPORT_FILE);
-	printf("The temperature in %s is %s.",city, temperature);
+	printf("The temperature in %s is %s°C.", city, temperature);
 }
 
 void load_weather_report(char *city_name, char *file_name)
