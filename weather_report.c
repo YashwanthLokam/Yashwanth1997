@@ -4,14 +4,24 @@
 #include<string.h>
 #define SEARCH_DELIMITERS "{:,["
 #define WEATHER_REPORT_FILE "weather_report.dat"
-void display_temperature();
+void display_temperature(char*);
 void is_pointer_null(FILE*);
 void load_weather_report(char*, char*);
 char* get_temperature(char*);
 
-int main()
+int main(int argc, char* argv[])
 {
-	display_temperature();
+	char city[20];
+	if(argv[1] == NULL)
+	{
+		printf("Enter a city name: ");
+		scanf("%s", city);
+	}
+	else
+	{
+		strcpy(city, argv[1]);
+	}
+	display_temperature(city);
 }
 
 char* get_temperature(char *file_name)
@@ -41,14 +51,12 @@ char* get_temperature(char *file_name)
 	return temperature_in_weather_report_file;
 }
 
-void display_temperature()
+void display_temperature(char *location)
 {
-	printf("Enter a city name: ");
-	char city[20];
-	scanf("%s", city);
-	load_weather_report(city, WEATHER_REPORT_FILE);
+	char degree_symbol = 248;
+	load_weather_report(location, WEATHER_REPORT_FILE);
 	char *temperature = get_temperature(WEATHER_REPORT_FILE);
-	printf("The temperature in %s is %s°C.", city, temperature);
+	printf("The temperature in %s is %s%cC", location, temperature, degree_symbol);
 }
 
 void load_weather_report(char *city_name, char *file_name)
