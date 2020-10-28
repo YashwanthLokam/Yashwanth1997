@@ -1,4 +1,4 @@
-// program to get no of coronavirus cases in a country
+// Program to get no of coronavirus cases in a country
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
