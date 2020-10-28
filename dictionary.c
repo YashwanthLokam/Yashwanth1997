@@ -7,21 +7,32 @@
 void display_definition(char*, char*);
 char* get_definition_of_word();
 void play_audio();
-void information_of_the_word();
+void information_of_the_word(char*);
 
-int main()
+int main(int argc, char* argv[])
 {
-	information_of_the_word();
+	char given_word[20];
+	if(argv[1] == NULL)
+	{
+		printf("Enter a word to find its meaning and pronunciation: ");
+		scanf("%s", given_word);
+		// information_of_the_word(given_word);
+	}
+	else
+	{
+		strcpy(given_word, argv[1]);
+		printf("The word is %s.\n", given_word);
+		// given_word[strlen(given_word) - 1] = '\0';
+	}
+		information_of_the_word(given_word);
 }
 
-void information_of_the_word()
+void information_of_the_word(char *given_word_to_find_meaning)
 {
-	char given_word_to_find_meaning[20];
+	// printf("%s", given_word_to_find_meaning);
 	char command[100];
 	char *meaning_of_the_word;
-	printf("Enter a word to find its meaning and pronunciation: ");
-	scanf("%s", given_word_to_find_meaning);
-	sprintf(command, "curl \"https://api.dictionaryapi.dev/api/v2/entries/en/%s\" -o %s -s", given_word_to_find_meaning, INFORMATION_OF_WORD);
+	sprintf(command, "curl \"https://api.dictionaryapi.dev/api/v2/entries/en/%s\" > %s -s", given_word_to_find_meaning, INFORMATION_OF_WORD);
 	system(command);
 	meaning_of_the_word = get_definition_of_word();
 	display_definition(meaning_of_the_word, given_word_to_find_meaning);
@@ -31,12 +42,12 @@ void information_of_the_word()
 void play_audio()
 {
 	FILE *fp_audio_of_word;
-	char data_from_file[1000];
+	char complete_information_of_word[1000];
 	fp_audio_of_word = fopen(INFORMATION_OF_WORD, "r");
-	fread(data_from_file, sizeof(data_from_file), 1, fp_audio_of_word);
+	fread(complete_information_of_word, sizeof(complete_information_of_word), 1, fp_audio_of_word);
 	char command_to_play_audio[100];
 	char *ptr_token_of_the_string;
-	ptr_token_of_the_string = strtok(data_from_file, SEARCH_DELIMITERS);
+	ptr_token_of_the_string = strtok(complete_information_of_word, SEARCH_DELIMITERS);
 	while(ptr_token_of_the_string != NULL)
 	{
 		int audio_found = 0;
@@ -48,7 +59,6 @@ void play_audio()
 		if(audio_found == 1)
 		{
 			ptr_token_of_the_string = strtok(NULL, SEARCH_DELIMITERS);
-			printf("%s", ptr_token_of_the_string);
 			sprintf(command_to_play_audio ,"vlc -I null --play-and-exit  \"ptr_token_of_the_string\"");
 			system(command_to_play_audio);
 		}
@@ -60,11 +70,11 @@ char* get_definition_of_word()
 {
 	FILE *fp_data_of_word;
 	fp_data_of_word = fopen(INFORMATION_OF_WORD, "r");
-	char data_from_file[1000];
-	fread(data_from_file, sizeof(data_from_file), 1, fp_data_of_word);
+	char complete_information_of_word[1000];
+	fread(complete_information_of_word, sizeof(complete_information_of_word), 1, fp_data_of_word);
 	char *ptr_token_of_the_string;
 	char *meaning_of_word;
-	ptr_token_of_the_string = strtok(data_from_file, SEARCH_DELIMITERS);
+	ptr_token_of_the_string = strtok(complete_information_of_word, SEARCH_DELIMITERS);
 	while(ptr_token_of_the_string != NULL)
 	{
 		int meaning_found = 0;
