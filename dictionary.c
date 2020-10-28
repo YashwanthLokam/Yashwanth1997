@@ -16,20 +16,17 @@ int main(int argc, char* argv[])
 	{
 		printf("Enter a word to find its meaning and pronunciation: ");
 		scanf("%s", given_word);
-		// information_of_the_word(given_word);
 	}
 	else
 	{
 		strcpy(given_word, argv[1]);
 		printf("The word is %s.\n", given_word);
-		// given_word[strlen(given_word) - 1] = '\0';
 	}
 		information_of_the_word(given_word);
 }
 
 void information_of_the_word(char *given_word_to_find_meaning)
 {
-	// printf("%s", given_word_to_find_meaning);
 	char command[100];
 	char *meaning_of_the_word;
 	sprintf(command, "curl \"https://api.dictionaryapi.dev/api/v2/entries/en/%s\" > %s -s", given_word_to_find_meaning, INFORMATION_OF_WORD);
