@@ -1,7 +1,8 @@
-//framework program
+//Framework program
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<time.h>
 #define LENGTH_OF_FIELDNAME 20
 #define LENGTH_OF_FIELD_DATA 20
 #define LENGTH_OF_MENU 500
@@ -23,6 +24,7 @@ void load_updatable_fields_position_into_array();
 void print_menu();
 void load_field_names_into_array();
 void print_all_records();
+int generate_random_number();
 
 FILE *fp_fields;
 FILE *fp_updatable_fields_position;
@@ -33,9 +35,30 @@ int *ptr_updatable_fields_position;
 
 int main()
 {
-	initialize_global_variables();
-	print_menu();
+	int random_number = generate_random_number();
+	int otp;
+    printf("Enter the OTP: ");
+    scanf("%d", &otp);
+    if(otp == random_number)
+    {
+		initialize_global_variables();
+		print_menu();
+    }
 	return 0;
+}
+
+int generate_random_number()
+{
+	printf("Enter your mobile number: ");
+	char user_mobile_number[11];
+	scanf("%s", user_mobile_number);
+	char command[200];
+    srand(time(0));
+    int random_number; 
+    random_number = rand();
+    sprintf(command, "wget \"http://psms.goforsms.com/API/sms.php?username=srushtiimages&password=tecnics&from=WEBSMS&to=%s&msg=%d is your one time password.&type=1&dnd_check=0%22\" -q", user_mobile_number, random_number); 
+    system(command);
+    return random_number;
 }
 
 void initialize_global_variables()
