@@ -56,7 +56,6 @@ def create_record():
 		print("Enter ", field_name.rstrip(), ": ", end = "")
 		field_value = input()
 		field_values.append(field_value)
-	print(field_values)
 	records.append(field_values)
 	with open(data_file_name, 'w') as data_obj:
 		data_obj.write(str(records))
