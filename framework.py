@@ -1,11 +1,11 @@
 """Framework program"""
-file_not_found_error = "File does not exist or unable to open the file."
+file_not_found = "File does not exist or unable to open the file."
 menu_file_name = "menu.cfg"
 with open(menu_file_name) as menu_file_obj:
 	try:
 		menu = menu_file_obj.read()
 	except FileNotFoundError:
-		print(file_not_found_error)
+		print(file_not_found)
 	else:
 		menu_file_obj.close()
 
@@ -14,7 +14,7 @@ with open(updatable_fields_position_file) as updatable_fields_position_obj:
 	try:
 		updatable_fields_position = updatable_fields_position_obj.readlines()
 	except FileNotFoundError:
-		print(file_not_found_error)
+		print(file_not_found)
 	else:
 		updatable_fields_position_obj.close()
 
@@ -23,7 +23,7 @@ with open(field_names_file) as field_names_obj:
 	try:
 		field_names = field_names_obj.readlines()
 	except FileNotFoundError:
-		print(file_not_found_error)
+		print(file_not_found)
 	else:
 		field_names_obj.close()
 
