@@ -1,4 +1,4 @@
-"""Program to find temperature of a city"""
+"""Program to print temperature of a city"""
 import requests
 
 location = input("Enter city name: ")
