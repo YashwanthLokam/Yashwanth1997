@@ -45,7 +45,7 @@ if response.status_code == 200:
 		if user_choice > 0 and user_choice <=4:
 			functions_list[user_choice - 1]()
 		else:
-			print("ENTER A VALID NUMBER")
+			print("ENTER A VALID NUMBER.")
 else:
-	print("ENTER A CORRECTLY SPELLED WORD")
+	print("INVALID WORD")
 
