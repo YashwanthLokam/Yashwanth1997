@@ -1,4 +1,4 @@
-"""Colour photo to gray scale"""
+"""Photoshop program"""
 import cv2
 import imutils
 
