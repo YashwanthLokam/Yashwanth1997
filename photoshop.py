@@ -35,9 +35,9 @@ def view_rotated_image():
 	cv2.destroyAllWindows()
 
 def view_cropped_image():
-	start_row, start_col = int(height * 0.15), int(width * 0.15)
-	end_row, end_col = int(height * 0.85), int(width * 0.85)
-	cropped_image = image[start_row:end_row, start_col:end_col]
+	start_row, start_column = int(height * 0.15), int(width * 0.15)
+	end_row, end_column = int(height * 0.85), int(width * 0.85)
+	cropped_image = image[start_row:end_row, start_column:end_column]
 	cv2.imshow("Cropped Image", cropped_image)
 	cv2.waitKey(0)
 
