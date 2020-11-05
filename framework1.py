@@ -1,4 +1,5 @@
 """Framework program"""
+import otp_program
 
 def print_record_not_found():
 	print("Record is not found.")
@@ -6,7 +7,7 @@ def print_record_not_found():
 def print_record(field_values):			
 	index = 1
 	for field_name in field_names:
-		print(field_name.rstrip(), ": ", field_values[index])
+		print(field_name, ": ", field_values[index])
 		index += 1
 
 def save_all_records():
@@ -20,7 +21,7 @@ def create_record():
 	field_values.append(status)
 	index = 1
 	for field_name in field_names:
-		print("Enter ", field_name.rstrip(), ": ", end = "")
+		print("Enter ", field_name, ": ", end = "")
 		field_value = input()
 		field_values.append(field_value)
 	records.append(field_values)
@@ -33,13 +34,17 @@ def print_all_records():
 			print_record(record)
 
 def search_record():
-	print("Enter ", field_names[0].rstrip(), ": ", end = "")
+	print("Enter ", field_names[0], ": ", end = "")
 	id = input()
+	status = False
 	for record in records:
 		if record[0] == 'A' and record[1] == str(id):
 			print("Record details\n")
 			print_record(record)
+			status = True
 			break
+	if status == False:
+		print_record_not_found()
 
 def update_record():
 	print("Enter ", field_names[0].rstrip(), ": ", end = "")
@@ -50,12 +55,12 @@ def update_record():
 		if record[0] == 'A' and record[1] == str(id):
 			is_record_found = True
 			for field_position in updatable_fields_position:
-				print(counter,". Update", field_names[int(field_position.rstrip())].rstrip())
+				print(counter,". Update", field_names[int(field_position.rstrip()) - 1])
 				counter += 1
 			choice = int(input("Enter a number: "))
-			print("Enter ", field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1].rstrip() ,": ", end = "")
+			print("Enter ", field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1],": ", end = "")
 			record[int(updatable_fields_position[choice - 1].rstrip())] = input()
-			print(field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1].rstrip(), "is updated.")
+			print(field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1], "is updated.")
 	save_all_records()
 	if is_record_found == False:
 		print_record_not_found()
@@ -79,6 +84,8 @@ def confirm_to_exit():
 	choice = input()
 	if choice == 'Y':
 		exit()
+
+otp_program.validate_otp()
 
 file_not_found_message = "File does not exist or unable to open the file."
 menu_file_name = "menu.cfg"
@@ -113,7 +120,9 @@ with open(updatable_fields_position_file) as updatable_fields_position_obj:
 field_names_file = "fields.cfg"
 with open(field_names_file) as field_names_obj:
 	try:
-		field_names = field_names_obj.readlines()
+		field_names = field_names_obj.read()
+		field_names = eval(field_names)
+
 	except FileNotFoundError:
 		print(file_not_found_message)
 	else:
