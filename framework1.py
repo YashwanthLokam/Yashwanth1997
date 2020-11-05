@@ -7,7 +7,8 @@ def print_record_not_found():
 def print_record(field_values):			
 	index = 1
 	for field_name in field_names:
-		print(field_name, ": ", field_values[index])
+		print(field_name, ": ", end = "")
+		print(field_values[index])
 		index += 1
 
 def save_all_records():
