@@ -14,7 +14,5 @@ try:
 			weather_report = weather_report.json()
 			temperature_of_a_city = weather_report['list'][0]['main']['temp']
 			print("The temperature in " + location + " is " + str(temperature_of_a_city) + chr(176) + "C.")
-		else:
-			print("PLEASE TELL A VALID CITY.")
 except:
 	print("PLEASE TELL A VALID CITY.")
