@@ -1,7 +1,7 @@
 """Frame work using xml"""
 import xml.etree.ElementTree as ET
 
-tree = ET.parse("data.xml")
+tree = ET.parse("data1.xml")
 root = tree.getroot()
 
 def print_record_not_found():
@@ -18,13 +18,13 @@ def	print_record(record):
 		print(record.find(field_name).text)
 
 def create_record():
-	root_element = ET.Element('record')
-	root_element.set('status', 'A')
+	element = ET.Element('record')
+	element.set('status', 'A')
 	for field_name in field_names:
-		root_sub_element = ET.SubElement(root_element, field_name)
+		sub_element = ET.SubElement(element, field_name)
 		field_value = input("Enter " + field_name + ": ")
-		root_sub_element.text = field_value
-	root.append(root_element)
+		sub_element.text = field_value
+	root.append(element)
 	save_all_records()
 	print("Record is inserted.")
 
