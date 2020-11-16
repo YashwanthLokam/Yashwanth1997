@@ -1,16 +1,8 @@
 """Insurance with SQLite"""
 import sqlite3
 file_not_found_message = "File does not exist or unable to open the file."
-		
-field_names_file = "fields.cfg"
-with open(field_names_file) as field_names_obj:
-	try:
-		field_names = field_names_obj.read()
-		field_names = eval(field_names)
-	except FileNotFoundError:
-		print(file_not_found_message)
-	else:
-		field_names_obj.close()
+
+field_names = ['Policy_Number', 'Insured_Name', 'Mobile_Number', 'Age', 'Tenure', 'Premium_Amount', 'Registration_No']		
 
 fields_data_types_file = "data_types_of_fields.cfg"
 with open(fields_data_types_file) as fields_data_types_obj:
