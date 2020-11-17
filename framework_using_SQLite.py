@@ -30,8 +30,18 @@ with open(table_names_file) as table_names_obj:
 	else:
 		table_names_obj.close()
 
+message_file = "message.cfg"
+with open(message_file) as message_obj:
+	try:
+		messages = message_obj.read()
+		messages = eval(messages)
+	except FileNotFoundError:
+		print(file_not_found_message)
+	else:
+		message_obj.close()
+
 connection = sqlite3.connect("framework.db")
-cursor = connection.execute("pragma table_info(" + '\'' + table_names[0] + '\'' + ")")
+cursor = connection.execute("pragma table_info('my_table')")
 field_names = []
 for field_name in cursor:
 	if field_name[1] != 'Status':
@@ -39,7 +49,7 @@ for field_name in cursor:
 
 def check_record_present(id):
 	is_record_found = False
-	records = connection.execute('SELECT ' + field_names[0] + ' FROM ' + table_names[0] + ' WHERE Status = "A"')
+	records = connection.execute('SELECT ' + field_names[0] + ' FROM my_table WHERE Status = "A"')
 	for record in records:
 		if record[0] == id:
 			is_record_found = True
@@ -53,7 +63,7 @@ def print_record(record):
 	print('-' * 20)
 
 def print_record_not_found():
-	print("Record is not found in the table.")
+	print(messages[2])
 
 def get_id():
 	return input("Enter " + field_names[0] + ": ")
@@ -66,22 +76,22 @@ def create_record():
 		field_values.append(field_value)
 	field_values.append('A')
 	record = tuple(field_values)
-	connection.execute('INSERT INTO '+ table_names[0] + ' VALUES' + str(record))
+	connection.execute('INSERT INTO my_table VALUES' + str(record))
 	connection.commit()
-	print("Record is inserted.")
+	print(messages[0])
 
 def search_record():
 	id_to_search_record = get_id()
 	is_record_found = check_record_present(id_to_search_record)
 	if is_record_found == True:
-		record_obj = connection.execute('SELECT * FROM '+ table_names[0] + ' WHERE ' + field_names[0] + ' = ' + id_to_search_record)
+		record_obj = connection.execute('SELECT * FROM my_table WHERE ' + field_names[0] + ' = ' + id_to_search_record)
 		record = record_obj.fetchone()
 		print_record(record)
 	else:
 		print_record_not_found()
 
 def print_all_records():
-	query = "SELECT * FROM " + table_names[0] + " WHERE Status = 'A'"
+	query = "SELECT * FROM my_table WHERE Status = 'A'"
 	records = connection.execute(query)
 	for record in records:
 		print_record(record)
@@ -90,9 +100,9 @@ def delete_record():
 	id_to_delete_record = get_id()
 	is_record_found = check_record_present(id_to_delete_record)
 	if is_record_found == True: 
-		connection.execute('UPDATE ' + table_names[0] + ' SET Status = "D" WHERE ' + field_names[0] + ' = ' + id_to_delete_record)
+		connection.execute('UPDATE my_table SET Status = "D" WHERE ' + field_names[0] + ' = ' + id_to_delete_record)
 		connection.commit()
-		print("Record is deleted.")
+		print(messages[1])
 	else:
 		print_record_not_found()
 		
@@ -107,7 +117,7 @@ def update_record():
 		choice = int(input("Enter a number: "))
 		print("Enter " + field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] +": ", end = "")
 		field_value_to_update_record = input()
-		connection.execute('UPDATE ' + table_names[0] + ' SET ' + field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] + ' = ' + "\"" + field_value_to_update_record + "\""+ ' WHERE ' + field_names[0] + ' = ' + id_to_update_record)
+		connection.execute('UPDATE my_table SET ' + field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] + ' = ' + "\"" + field_value_to_update_record + "\""+ ' WHERE ' + field_names[0] + ' = ' + id_to_update_record)
 		connection.commit()
 		print(field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] + " is updated.")
 	else:
