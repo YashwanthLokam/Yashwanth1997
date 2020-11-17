@@ -1,4 +1,4 @@
-"""Insurance with SQLite"""
+"""Framework program using SQLite"""
 import sqlite3
 file_not_found_message = "File does not exist or unable to open the file."
 
