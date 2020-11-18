@@ -6,39 +6,26 @@ menu_file_name = "menu.cfg"
 with open(menu_file_name) as menu_file_obj:
 	try:
 		menu = menu_file_obj.read()
+		menu_file_obj.close()
 	except FileNotFoundError:
 		print(file_not_found_message)
-	else:
-		menu_file_obj.close()
 
 updatable_fields_position_file = "updatable_fields_position.cfg"
 with open(updatable_fields_position_file) as updatable_fields_position_obj:
 	try:
 		updatable_fields_position = updatable_fields_position_obj.readlines()
-	except FileNotFoundError:
-		print(file_not_found_message)
-	else:
 		updatable_fields_position_obj.close()
-
-table_names_file = "table_names.cfg"
-with open(table_names_file) as table_names_obj:
-	try:
-		table_names = table_names_obj.read()
-		table_names = eval(table_names)
 	except FileNotFoundError:
 		print(file_not_found_message)
-	else:
-		table_names_obj.close()
 
 messages_file = "messages.cfg"
 with open(messages_file) as messages_obj:
 	try:
 		messages = messages_obj.read()
 		messages = eval(messages)
+		messages_obj.close()
 	except FileNotFoundError:
 		print(file_not_found_message)
-	else:
-		messages_obj.close()
 
 connection = sqlite3.connect("framework.db")
 cursor = connection.execute("pragma table_info('my_table')")
