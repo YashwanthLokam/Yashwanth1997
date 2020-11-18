@@ -30,15 +30,15 @@ with open(table_names_file) as table_names_obj:
 	else:
 		table_names_obj.close()
 
-message_file = "message.cfg"
-with open(message_file) as message_obj:
+messages_file = "messages.cfg"
+with open(messages_file) as messages_obj:
 	try:
-		messages = message_obj.read()
+		messages = messages_obj.read()
 		messages = eval(messages)
 	except FileNotFoundError:
 		print(file_not_found_message)
 	else:
-		message_obj.close()
+		messages_obj.close()
 
 connection = sqlite3.connect("framework.db")
 cursor = connection.execute("pragma table_info('my_table')")
