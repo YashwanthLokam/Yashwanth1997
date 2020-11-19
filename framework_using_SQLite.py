@@ -102,16 +102,19 @@ def update_record():
 			print(str(counter) + ". Update " + field_names[int(field_position.rstrip()) - 1])
 			counter += 1
 		choice = int(input("Enter a number: "))
-		print("Enter " + field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] +": ", end = "")
-		field_value_to_update_record = input()
-		connection.execute('UPDATE my_table SET ' + field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] + ' = ' + "\"" + field_value_to_update_record + "\""+ ' WHERE ' + field_names[0] + ' = ' + id_to_update_record)
-		connection.commit()
-		print(field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] + " is updated.")
+		if choice > 0 and choice < counter:
+			print("Enter " + field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] +": ", end = "")
+			field_value_to_update_record = input()
+			connection.execute('UPDATE my_table SET ' + field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] + ' = ' + "\"" + field_value_to_update_record + "\""+ ' WHERE ' + field_names[0] + ' = ' + id_to_update_record)
+			connection.commit()
+			print(field_names[int(updatable_fields_position[choice - 1].rstrip()) - 1] + " is updated.")
+		else:
+			print("ENTER A VALID NUMBER.")
 	else:
 		print_record_not_found()
 
 def confirm_to_exit():
-	print("Do you want to exit? ")
+	print("Are you sure? ")
 	print("Press Y or N" + ": ", end = "")
 	choice = input()
 	if choice.upper() == 'Y':
