@@ -16,7 +16,7 @@ print("\nType 'help;' or '\\h' for help. Type '\\c' to clear the current input s
 while True:
 	query = input("mysql> ")
 	my_cursor = my_database.cursor()
-	if query != "quit":
+	if query.lower() != "quit":
 		start = time.time()
 		try:
 			my_cursor.execute(query)
