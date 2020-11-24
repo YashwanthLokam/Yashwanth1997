@@ -1,4 +1,4 @@
-# Framework program using MySQL databese
+# Framework program using MySQL database
 import mysql.connector
 import table_format1
 file_not_found_error = "File does not exist or unable to open the file."
