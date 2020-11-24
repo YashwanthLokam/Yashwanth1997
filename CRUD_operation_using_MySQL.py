@@ -1,6 +1,5 @@
 # Framework program using MySQL database
 import mysql.connector
-import table_format1
 file_not_found_error = "File does not exist or unable to open the file."
 
 menu_file = "menu.cfg"
@@ -36,6 +35,13 @@ def check_record_present_or_not(id):
 			is_record_found = True
 	return is_record_found
 
+def print_record(record):
+	index = 0
+	for field_name in field_names:
+		print(field_name + ": " + str(record[index]))
+		index += 1
+	print('-' * 25)
+
 def print_record_not_found():
 	print(messages[1])
 
@@ -54,21 +60,17 @@ def create_record():
 def search_record():
 	id_to_search_record = get_id()
 	is_record_found = check_record_present_or_not(id_to_search_record)
-	field_values = []
 	if is_record_found == True:
 		cursor.execute('SELECT * FROM my_table1 WHERE ' + field_names[0] + ' = ' + id_to_search_record)
 		record = cursor.fetchone()
-		field_values.append(record)
-		table_format1.display_table_format(field_values, field_names)
+		print_record(record)
 	else:
 		print_record_not_found()
 
 def print_all_records():
 	cursor.execute("SELECT * FROM my_table1 WHERE Status = 'A'")
-	records = []
 	for record in cursor:
-		records.append(record)
-	table_format1.display_table_format(records, field_names)
+		print_record(record)
 
 def delete_record():
 	id_to_delete_record = get_id()
