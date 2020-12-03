@@ -175,17 +175,18 @@ class Framework
 			scan.nextLine();
 			if(choice > 0 && choice < counter)
 			{
-				System.out.print("Enter new " + fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1] + ": ");
+				String fieldName = fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1];
+				System.out.print("Enter new " + fieldName + ": ");
 				String fieldValue = scan.nextLine();
-				String query1 = "update my_table1 set " + fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1] + " = '" + fieldValue + "' where " + fieldNames[0] + " = '" + idToUpdateRecord + "'";
+				String query1 = "update my_table1 set " + fieldName + " = '" + fieldValue + "' where " + fieldNames[0] + " = '" + idToUpdateRecord + "'";
 				int noOfRowsAffected = statement.executeUpdate(query1);
 				if(noOfRowsAffected == 1)
 				{
-					System.out.println(fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1] + " is updated.");
+					System.out.println(fieldName + " is updated.");
 				}
 				else
 				{
-					System.out.println("Error in updating " + fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1] + ".");
+					System.out.println("Error in updating " + fieldName + ".");
 				}
 			}
 			else
