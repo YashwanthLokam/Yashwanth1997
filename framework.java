@@ -181,11 +181,11 @@ class Framework
 				int noOfRowsAffected = statement.executeUpdate(query1);
 				if(noOfRowsAffected == 1)
 				{
-					System.out.println(fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1] + " is updated");
+					System.out.println(fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1] + " is updated.");
 				}
 				else
 				{
-					System.out.println("Error in updating " + fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1]);
+					System.out.println("Error in updating " + fieldNames[Integer.parseInt(updatableFieldsIndex[choice - 1]) - 1] + ".");
 				}
 			}
 			else
