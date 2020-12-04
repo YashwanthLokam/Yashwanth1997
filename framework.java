@@ -5,74 +5,16 @@ import java.util.Scanner;
 
 class Framework
 {
-	static Statement statement;
-	static Connection connection;
-	static Scanner scan = new Scanner(System.in);
+	Statement statement;
+	Connection connection;
+	Scanner scan = new Scanner(System.in);
 	String[] fieldNames;
 	String[] messages;
 	ResultSet result;
 	String query;
+	String menu;
 	String[] updatableFieldsIndex;
-	static String errorMessage = "PLEASE ENTER A VALID NUMBER."; 
-	public static void main(String args[]) 
-	{
-		Framework framework = new Framework();
-		String url = "jdbc:mysql://165.22.14.77/dbYashwanth?user=Yashwanth&password=Yashwanth";
-		try
-		{
-			connection = DriverManager.getConnection(url);
-			System.out.println("Connected Successfuly.");
-			statement = connection.createStatement();
-			framework.storeFieldNames();
-			framework.messages = framework.getData("messages");
-			String query = "select * from Config where FileName = 'menu'";
-			framework.result = statement.executeQuery(query);
-			String menu = "";
-			while(framework.result.next())
-			{
-				menu = framework.result.getString("FileContent");
-			}
-			while(true)
-			{
-				System.out.println(menu);
-				System.out.print("Enter a number: ");
-				char choice = scan.next().charAt(0);
-				scan.nextLine();
-				switch(choice)
-				{
-					case '1': framework.createRecord();
-							break;
-					case '2': framework.searchRecord();
-							break;
-					case '3': framework.printAllRecords();
-							break;
-					case '4': framework.updateRecord();
-							break;
-					case '5': framework.deleteRecord();
-							break;
-					case '6': confirmToExit();
-					default: System.out.println(errorMessage);
-				}
-			}
-		}
-		catch(SQLException error)
-		{
-			System.out.println(error.getMessage());
-		}
-	}
-
-	public static void confirmToExit() throws SQLException
-	{
-		System.out.println("Are you sure? ");
-		System.out.print("Press Y or N: ");
-		String choice = scan.next();
-		if(choice.toUpperCase().equals("Y"))
-		{
-			connection.close();
-			System.exit(0);
-		}
-	}
-
+	String errorMessage = "PLEASE ENTER A VALID OPTION."; 
 	public void storeFieldNames() throws SQLException
 	{
 		query = "select * from my_table1";
@@ -229,5 +171,92 @@ class Framework
 			tempData = result.getString("FileContent");
 		}
 		return tempData.split(", ");
+	}
+
+	public Framework()
+	{
+		String url = "jdbc:mysql://165.22.14.77/dbYashwanth?user=Yashwanth&password=Yashwanth";
+		try
+		{
+			connection = DriverManager.getConnection(url);
+			System.out.println("Connected Successfuly.");
+			statement = connection.createStatement();
+			storeFieldNames();
+			storeMessages();
+			storeMenu();
+		}
+		catch(SQLException error)
+		{
+			System.out.println(error.getMessage());
+		}
+
+	}
+
+	public void storeMessages() throws SQLException
+	{
+		messages = getData("messages");
+	}
+
+	public void storeMenu() throws SQLException
+	{
+		String query = "select * from Config where FileName = 'menu'";
+		result = statement.executeQuery(query);
+		while(result.next())
+		{
+			menu = result.getString("FileContent");
+		}
+	}
+
+	public void printMenu() throws SQLException
+	{
+		while(true)
+		{
+			System.out.println(menu);
+			System.out.print("Enter a number: ");
+			String choice = scan.next();
+			scan.nextLine();
+			switch(choice)
+			{
+				case "1": createRecord();
+						break;
+				case "2": searchRecord();
+						break;
+				case "3": printAllRecords();
+						break;
+				case "4": updateRecord();
+						break;
+				case "5": deleteRecord();
+						break;
+				case "6": System.out.println("Are you sure? ");
+						System.out.print("Press Y or N: ");
+						String exitChoice = scan.next();
+						if(exitChoice.toUpperCase().equals("Y"))
+						{
+							connection.close();
+							System.exit(0);
+						}
+						else if(exitChoice.toUpperCase().equals("N"))
+						{
+							continue;
+						}
+				default: System.out.println(errorMessage);
+			}
+		}
+	}
+}
+
+class MainClass
+{
+	public static void main(String args[]) 
+	{
+		Framework framework = new Framework();
+		try
+		{
+			framework.printMenu();
+		}
+		catch(SQLException error)
+		{
+			System.out.println(error.getMessage());
+		}
 	}
 }
