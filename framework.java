@@ -189,7 +189,6 @@ class Framework
 		{
 			System.out.println(error.getMessage());
 		}
-
 	}
 
 	public void storeMessages() throws SQLException
