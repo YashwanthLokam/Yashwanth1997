@@ -232,6 +232,7 @@ class Framework
 						String exitChoice = scan.next();
 						if(exitChoice.toUpperCase().equals("Y"))
 						{
+							scan.close();
 							connection.close();
 							System.exit(0);
 						}
