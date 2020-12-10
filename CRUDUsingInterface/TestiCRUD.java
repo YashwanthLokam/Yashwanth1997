@@ -13,7 +13,6 @@ class TestiCRUD
 		catch(Exception error)
 		{
 			System.out.println(error.getMessage());
-			error.printStackTrace();
 		}
 	}
 }
