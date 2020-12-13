@@ -67,7 +67,7 @@ namespace FrameworkMyLib1
 				adapter.Fill(table);
 				for(int index = 0; index < table.Rows.Count; index++)
 				{
-					foreach (String fieldName in fieldNames)
+					foreach(String fieldName in fieldNames)
 					{
 						Console.WriteLine(fieldName + ": " + table.Rows[index][fieldName].ToString());
 					}
@@ -86,7 +86,7 @@ namespace FrameworkMyLib1
 	    	{
 		    	String fieldValues = "";
 				String fieldValue = "";
-				foreach (String fieldName in fieldNames)
+				foreach(String fieldName in fieldNames)
 				{
 					Console.Write("Enter " + fieldName + ": ");
 					fieldValue = Console.ReadLine();
