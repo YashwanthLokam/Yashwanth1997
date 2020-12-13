@@ -41,7 +41,7 @@ namespace FrameworkLib
 		        MySqlDataAdapter dataAdapter = new MySqlDataAdapter(cmd);
 		        dataAdapter.Fill(table);
 		        fieldNames = new String[table.Columns.Count - 1];
-		        for (int index = 0; index < table.Columns.Count; index++)
+		        for(int index = 0; index < table.Columns.Count; index++)
 		        {
 		        	if(!(String.Equals(table.Columns[index].ToString(), "Status")))
 		        	{
@@ -66,7 +66,7 @@ namespace FrameworkLib
 		        {
 		            while(reader.Read())
 		            {
-		            	foreach (String fieldName in fieldNames)
+			            foreach(String fieldName in fieldNames)
 		            	{
 			                Console.WriteLine(fieldName + ": " + reader.GetString(reader.GetOrdinal(fieldName)));
 		            	}
@@ -87,7 +87,7 @@ namespace FrameworkLib
 	    	{
 		    	String fieldValues = "";
 				String fieldValue = "";
-				foreach (String fieldName in fieldNames)
+				foreach(String fieldName in fieldNames)
 				{
 					Console.Write("Enter " + fieldName + ": ");
 					fieldValue = Console.ReadLine();
